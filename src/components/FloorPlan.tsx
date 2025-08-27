@@ -8,9 +8,10 @@ interface FloorPlanProps {
   floor: 'ground' | 'first';
   bookedRooms: { [roomId: string]: any };
   onRoomClick: (roomId: string) => void;
+  isPublicView?: boolean;
 }
 
-export default function FloorPlan({ rooms, floor, bookedRooms, onRoomClick }: FloorPlanProps) {
+export default function FloorPlan({ rooms, floor, bookedRooms, onRoomClick, isPublicView = false }: FloorPlanProps) {
   const floorRooms = rooms.filter(room => room.floor === floor);
   
   const getFloorStats = () => {
@@ -67,6 +68,7 @@ export default function FloorPlan({ rooms, floor, bookedRooms, onRoomClick }: Fl
               ))}
               onRoomClick={onRoomClick}
               bookingDetails={typeof bookedRooms[room.id] === 'object' ? bookedRooms[room.id] : null}
+              isPublicView={isPublicView}
             />
           ))}
           

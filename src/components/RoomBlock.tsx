@@ -7,9 +7,10 @@ interface RoomBlockProps {
   isBooked: boolean;
   onRoomClick: (roomId: string) => void;
   bookingDetails?: any;
+  isPublicView?: boolean;
 }
 
-export default function RoomBlock({ room, isBooked, onRoomClick, bookingDetails }: RoomBlockProps) {
+export default function RoomBlock({ room, isBooked, onRoomClick, bookingDetails, isPublicView = false }: RoomBlockProps) {
   const [showTooltip, setShowTooltip] = useState(false);
 
   const getTypeColor = (type: Room['type']) => {
@@ -60,14 +61,16 @@ export default function RoomBlock({ room, isBooked, onRoomClick, bookingDetails 
     >
       <button
         onClick={() => onRoomClick(room.id)}
+        disabled={isPublicView}
         className={`
           w-full h-full min-h-[80px] p-3 rounded-lg border-2 transition-all duration-300
           ${isBooked 
             ? 'border-red-500 bg-red-50 shadow-lg scale-105' 
-            : `${getTypeColor(room.type)} hover:shadow-md hover:scale-105 active:scale-95`
+            : `${getTypeColor(room.type)} ${!isPublicView ? 'hover:shadow-md hover:scale-105 active:scale-95' : ''}`
           }
           flex flex-col items-center justify-center text-center
           group relative overflow-hidden
+          ${isPublicView ? 'cursor-default' : 'cursor-pointer'}
         `}
       >
         <div className="flex items-center space-x-2 mb-1">
@@ -91,9 +94,12 @@ export default function RoomBlock({ room, isBooked, onRoomClick, bookingDetails 
                 BOOKED
               </span>
               {bookingDetails && typeof bookingDetails === 'object' && (
-                <span className="text-red-600 text-xs bg-white px-1 py-0.5 rounded shadow">
-                  {bookingDetails.startTime} - {bookingDetails.endTime}
-                </span>
+                <div className="text-red-600 text-xs bg-white px-1 py-0.5 rounded shadow">
+                  <div>{bookingDetails.startTime} - {bookingDetails.endTime}</div>
+                  {isPublicView && (
+                    <div className="mt-1 font-medium">{bookingDetails.bookedBy}</div>
+                  )}
+                </div>
               )}
             </div>
           </div>
