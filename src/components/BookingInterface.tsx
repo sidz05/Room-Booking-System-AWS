@@ -166,22 +166,24 @@ export default function BookingInterface({ rooms, selectedDate, onBack }: Bookin
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+      <div className="bg-white rounded-2xl shadow-xl border border-gray-200 p-8 hover:shadow-2xl transition-all duration-300">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center space-x-3">
-            <Settings className="w-7 h-7 text-blue-600" />
+            <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
+              <Settings className="w-7 h-7 text-white" />
+            </div>
             <div>
-              <h1 className="text-2xl font-bold text-gray-800">
+              <h1 className="text-3xl font-bold text-gray-800">
                 Admin Dashboard
               </h1>
-              <p className="text-gray-600">Manage room bookings and reservations</p>
+              <p className="text-gray-600 text-lg">Manage room bookings and reservations</p>
             </div>
           </div>
           
           <div className="flex items-center space-x-4">
             <button
               onClick={() => setViewMode('notice')}
-              className="flex items-center space-x-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors"
+              className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
             >
               <Eye className="w-4 h-4" />
               <span>Notice Board</span>
@@ -189,7 +191,7 @@ export default function BookingInterface({ rooms, selectedDate, onBack }: Bookin
             
             <button
               onClick={resetAllBookings}
-              className="flex items-center space-x-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors"
+              className="flex items-center space-x-2 px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
             >
               <RotateCcw className="w-4 h-4" />
               <span>Reset All</span>
@@ -197,7 +199,7 @@ export default function BookingInterface({ rooms, selectedDate, onBack }: Bookin
             
             <button
               onClick={onBack}
-              className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium"
+              className="px-8 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white rounded-xl transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105"
             >
               Change Date
             </button>
@@ -207,8 +209,8 @@ export default function BookingInterface({ rooms, selectedDate, onBack }: Bookin
         {/* Date and Stats */}
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <CheckCircle className="w-5 h-5 text-green-600" />
-            <span className="font-medium text-gray-800">
+            <CheckCircle className="w-6 h-6 text-green-600" />
+            <span className="font-semibold text-gray-800 text-lg">
               {new Date(selectedDate).toLocaleDateString('en-US', { 
                 weekday: 'long', 
                 year: 'numeric', 
@@ -218,17 +220,17 @@ export default function BookingInterface({ rooms, selectedDate, onBack }: Bookin
             </span>
           </div>
           
-          <div className="flex items-center space-x-6 text-sm">
+          <div className="flex items-center space-x-8 text-sm">
             <div className="text-center">
-              <div className="font-bold text-xl text-gray-800">{stats.total}</div>
+              <div className="font-bold text-2xl text-gray-800">{stats.total}</div>
               <div className="text-gray-600">Total Rooms</div>
             </div>
             <div className="text-center">
-              <div className="font-bold text-xl text-green-600">{stats.available}</div>
+              <div className="font-bold text-2xl text-green-600">{stats.available}</div>
               <div className="text-gray-600">Available</div>
             </div>
             <div className="text-center">
-              <div className="font-bold text-xl text-red-600">{stats.booked}</div>
+              <div className="font-bold text-2xl text-red-600">{stats.booked}</div>
               <div className="text-gray-600">Booked</div>
             </div>
           </div>
@@ -236,23 +238,23 @@ export default function BookingInterface({ rooms, selectedDate, onBack }: Bookin
       </div>
 
       {/* Floor Tabs */}
-      <div className="flex space-x-1 bg-gray-100 p-1 rounded-lg w-fit">
+      <div className="flex space-x-2 bg-gray-100 p-2 rounded-xl w-fit shadow-lg">
         <button
           onClick={() => setActiveFloor('ground')}
-          className={`px-6 py-2 rounded-lg font-medium transition-all duration-200 ${
+          className={`px-8 py-3 rounded-xl font-semibold transition-all duration-300 transform ${
             activeFloor === 'ground'
-              ? 'bg-white text-blue-600 shadow-sm'
-              : 'text-gray-600 hover:text-gray-800'
+              ? 'bg-white text-blue-600 shadow-lg scale-105'
+              : 'text-gray-600 hover:text-gray-800 hover:scale-105'
           }`}
         >
           Ground Floor
         </button>
         <button
           onClick={() => setActiveFloor('first')}
-          className={`px-6 py-2 rounded-lg font-medium transition-all duration-200 ${
+          className={`px-8 py-3 rounded-xl font-semibold transition-all duration-300 transform ${
             activeFloor === 'first'
-              ? 'bg-white text-blue-600 shadow-sm'
-              : 'text-gray-600 hover:text-gray-800'
+              ? 'bg-white text-blue-600 shadow-lg scale-105'
+              : 'text-gray-600 hover:text-gray-800 hover:scale-105'
           }`}
         >
           First Floor

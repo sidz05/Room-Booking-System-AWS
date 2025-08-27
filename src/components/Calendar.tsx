@@ -108,17 +108,17 @@ export default function Calendar({
           onClick={() => handleDateClick(dateString, isPast)}
           disabled={isPast}
           className={`
-            p-3 text-sm font-medium rounded-lg transition-all duration-200
+            p-4 text-sm font-semibold rounded-xl transition-all duration-300 transform
             ${
               isSelected
-                ? "bg-blue-600 text-white shadow-lg scale-105"
+                ? "bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-xl scale-110"
                 : isPast
-                ? "text-gray-400 cursor-not-allowed"
+                ? "text-gray-500 cursor-not-allowed opacity-50"
                 : isTodayDate
-                ? "bg-blue-100 text-blue-800 hover:bg-blue-200"
-                : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                ? "bg-blue-500 bg-opacity-30 text-blue-200 hover:bg-opacity-50 border border-blue-400 border-opacity-50"
+                : "text-white hover:bg-white hover:bg-opacity-20 hover:text-white hover:scale-105"
             }
-            ${!isPast && "hover:scale-105 active:scale-95"}
+            ${!isPast && "hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl"}
           `}
         >
           {day}
@@ -130,12 +130,14 @@ export default function Calendar({
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 max-w-md mx-auto">
+    <div className="bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl shadow-2xl p-8 max-w-lg mx-auto border border-white border-opacity-20 hover:bg-opacity-15 transition-all duration-300">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-3">
-          <CalendarIcon className="w-6 h-6 text-blue-600" />
-          <h2 className="text-xl font-bold text-gray-800">Select Date</h2>
+          <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
+            <CalendarIcon className="w-6 h-6 text-white" />
+          </div>
+          <h2 className="text-2xl font-bold text-white">Select Date</h2>
         </div>
       </div>
 
@@ -143,18 +145,18 @@ export default function Calendar({
       <div className="flex items-center justify-between mb-4">
         <button
           onClick={() => navigateMonth("prev")}
-          className="p-2 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-800 transition-colors"
+          className="p-3 rounded-xl text-white hover:bg-white hover:bg-opacity-20 hover:text-white transition-all duration-300 hover:scale-110"
         >
           <ChevronLeft className="w-5 h-5" />
         </button>
 
-        <h3 className="text-lg font-semibold text-gray-800">
+        <h3 className="text-xl font-bold text-white">
           {monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}
         </h3>
 
         <button
           onClick={() => navigateMonth("next")}
-          className="p-2 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-800 transition-colors"
+          className="p-3 rounded-xl text-white hover:bg-white hover:bg-opacity-20 hover:text-white transition-all duration-300 hover:scale-110"
         >
           <ChevronRight className="w-5 h-5" />
         </button>
@@ -165,7 +167,7 @@ export default function Calendar({
         {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
           <div
             key={day}
-            className="p-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+            className="p-3 text-center text-sm font-semibold text-blue-200 uppercase tracking-wider"
           >
             {day}
           </div>
@@ -177,9 +179,9 @@ export default function Calendar({
 
       {/* Selected Date Info */}
       {selectedDate && (
-        <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
-          <p className="text-sm text-blue-800">
-            <span className="font-medium">Selected:</span>{" "}
+        <div className="mt-6 p-4 bg-blue-500 bg-opacity-20 rounded-xl border border-blue-400 border-opacity-50 backdrop-blur-sm">
+          <p className="text-sm text-blue-200">
+            <span className="font-semibold text-white">Selected:</span>{" "}
             {new Date(selectedDate).toLocaleDateString("en-US", {
               weekday: "long",
               year: "numeric",
