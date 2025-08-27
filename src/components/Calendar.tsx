@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { ChevronLeft, ChevronRight, CalendarIcon } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 
 interface CalendarProps {
   selectedDate: string | null;
@@ -12,7 +11,6 @@ export default function Calendar({
   onDateSelect,
 }: CalendarProps) {
   const [currentMonth, setCurrentMonth] = useState(new Date());
-  const navigate = useNavigate();
 
   const monthNames = [
     "January",
@@ -69,11 +67,9 @@ export default function Calendar({
     return checkDate < today;
   };
 
-  // handle click on date → save date + navigate
   const handleDateClick = (dateString: string, isPast: boolean) => {
     if (!isPast) {
       onDateSelect(dateString);
-      navigate("/FloorPlan.tsx"); // go to next screen
     }
   };
 

@@ -1,62 +1,45 @@
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-  useNavigate,
-} from "react-router-dom";
-import Login from "./components/auth/Login";
-import Signup from "./components/auth/Signup";
+import React, { useState } from "react";
 import Calendar from "./components/Calendar";
-import FloorPlan from "./components/FloorPlan"; // ⬅️ your next screen
-import { useAuth } from "./context/AuthContext";
-import { useState } from "react";
-
-function AppRoutes() {
-  const { user } = useAuth();
-  const [selectedDate, setSelectedDate] = useState<string | null>(null);
-
-  return (
-    <Routes>
-      {/* Public Routes */}
-      <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />
-      <Route
-        path="/signup"
-        element={!user ? <Signup /> : <Navigate to="/" />}
-      />
-
-      {/* Protected Routes */}
-      <Route
-        path="/"
-        element={
-          user ? (
-            <Calendar
-              selectedDate={selectedDate}
-              onDateSelect={setSelectedDate}
-            />
-          ) : (
-            <Navigate to="/login" />
-          )
-        }
-      />
-      <Route
-        path="/floorplan"
-        element={
-          user && selectedDate ? (
-            <FloorPlan selectedDate={selectedDate} />
-          ) : (
-            <Navigate to="/" />
-          )
-        }
-      />
-    </Routes>
-  );
-}
+import BookingInterface from "./components/BookingInterface";
+import { rooms } from "./data/rooms";
 
 export default function App() {
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [showBookingInterface, setShowBookingInterface] = useState(false);
+
+  const handleDateSelect = (date: string) => {
+    setSelectedDate(date);
+    setShowBookingInterface(true);
+  };
+
+  const handleBackToCalendar = () => {
+    setShowBookingInterface(false);
+  };
+
   return (
-    <Router>
-      <AppRoutes />
-    </Router>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+      <div className="max-w-7xl mx-auto">
+        {!showBookingInterface ? (
+          <div className="flex flex-col items-center justify-center min-h-screen">
+            <div className="text-center mb-8">
+              <h1 className="text-4xl font-bold text-gray-800 mb-2">
+                Computer Engineering Department
+              </h1>
+              <p className="text-xl text-gray-600">Room Booking System</p>
+            </div>
+            <Calendar
+              selectedDate={selectedDate}
+              onDateSelect={handleDateSelect}
+            />
+          </div>
+        ) : (
+          <BookingInterface
+            rooms={rooms}
+            selectedDate={selectedDate!}
+            onBack={handleBackToCalendar}
+          />
+        )}
+      </div>
+    </div>
   );
 }
